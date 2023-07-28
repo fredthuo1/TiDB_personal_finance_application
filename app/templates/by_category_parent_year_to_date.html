@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}This Year's Transactions Summary{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">This Year's Transactions Summary</h1>
+
+    <!-- Chart Canvas -->
+    <div class="text-center">
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF';
+                var color = '#';
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var labels = {{ categories | tojson }};
+            var data = {{ total_amounts | tojson }};
+            var backgroundColors = [];
+            var borderColors = [];
+
+            for (var i = 0; i < labels.length; i++) {
+                var newColor = getRandomColor();
+                backgroundColors.push(newColor);
+                borderColors.push(newColor);
+            }
+
+            var myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Total Amount',
+                        data: data,
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Total Amount by Parent Category'
+                        }
+                    }
+                },
+            });
+    </script>
+
+    <!-- Display total income, expenditure, and savings -->
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Income</h5>
+                    <p class="card-text">{{ total_income }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Expenditure</h5>
+                    <p class="card-text">{{ total_expenditure }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Savings</h5>
+                    <p class="card-text">{{ total_savings }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th scope="col">Parent Category</th>
+                <th scope="col">Total Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.parent_category }}</td>
+                <td>{{ transaction.total_amount }}</td>
+                <td>{{ transaction.savings }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

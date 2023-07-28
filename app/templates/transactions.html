@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Transactions{% endblock %}
+
+{% block content %}
+<h1 align="center">Transactions</h1>
+
+<form method="get">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search" name="search_term" value="{{ request.args.get('search_term', '') }}">
+        <input type="date" class="form-control" name="start_date" value="{{ request.args.get('start_date', '') }}">
+        <input type="date" class="form-control" name="end_date" value="{{ request.args.get('end_date', '') }}">
+        <div class="input-group-append">
+            <button class="btn btn-secondary" type="submit" id="search-btn">
+                <i class="fa fa-search"></i>
+            </button>
+            <button class="btn btn-danger" type="button" id="clear-btn">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Description</th>
+            <th scope="col">Original Description</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Type</th>
+            <th scope="col">Parent Category</th>
+            <th scope="col">Category</th>
+            <th scope="col">Account</th>
+            <th scope="col">Tags</th>
+            <th scope="col">Memo</th>
+            <th scope="col">Pending</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for transaction in transactions %}
+        <tr>
+            <td>{{ transaction.date.strftime('%Y-%m-%d') }}</td>
+            <td>{{ transaction.description }}</td>
+            <td>{{ transaction.original_description }}</td>
+            <td>{{ transaction.amount }}</td>
+            <td>{{ transaction.type }}</td>
+            <td>{{ transaction.parent_category }}</td>
+            <td>{{ transaction.category }}</td>
+            <td>{{ transaction.account }}</td>
+            <td>{{ transaction.tags }}</td>
+            <td>{{ transaction.memo }}</td>
+            <td>{{ "Yes" if transaction.pending else "No" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Add pagination controls -->
+<div>
+    <p>Page: {{ transactions.page }}</p>
+    {% if transactions.has_prev %}
+    <a href="{{ url_for('views.transactions', page=transactions.prev_num) }}">Previous Page</a>
+    {% endif %}
+    {% if transactions.has_next %}
+    <a href="{{ url_for('views.transactions', page=transactions.next_num) }}">Next Page</a>
+    {% endif %}
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#clear-btn").click(function (e) {
+            e.preventDefault(); // Prevents the default action of the button
+            $("input[name='search_term']").val(''); // Clears the search input
+            $("input[name='start_date']").val(''); // Clears the start date input
+            $("input[name='end_date']").val(''); // Clears the end date input
+            $("form").submit(); // Submits the form (this will refresh the page)
+        });
+    });
+</script>
+{% endblock %}

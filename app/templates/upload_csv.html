@@ -1,0 +1,14 @@
+<!-- upload_csv.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Upload CSV</h1>
+<form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    {{ form.csv_file.label }}: {{ form.csv_file() }}<br>
+    {% for error in form.csv_file.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}
+    {{ form.submit() }}
+</form>
+{% endblock %}

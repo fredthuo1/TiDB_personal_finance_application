@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center mb-4">Welcome to Personal Finance App, {{ current_user.username }}</h1>
+
+            <!-- Success Message -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <div id="financialSummary" class="carousel slide mb-4" data-ride="carousel">
+                <div class="carousel-inner">
+                    <!-- Random Fun Facts Carousel Items -->
+                    <div class="carousel-item active">
+                        <div class="card">
+                            <div class="card-header">Random Fun Facts</div>
+                            <div class="card-body">
+                                <ul>
+                                    <li>Your financial journey begins with a single step!</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="card">
+                            <div class="card-header">Random Fun Facts</div>
+                            <div class="card-body">
+                                <ul>
+                                    <li>Did you know that saving just $5 a day can add up to over $1,800 in a year?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="card">
+                            <div class="card-header">Random Fun Facts</div>
+                            <div class="card-body">
+                                <ul>
+                                    <li>Financial planning is the key to a secure future.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="card">
+                            <div class="card-header">Random Fun Facts</div>
+                            <div class="card-body">
+                                <ul>
+                                    <li>Budgeting is like building a fortress for your finances.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="card">
+                            <div class="card-header">Random Fun Facts</div>
+                            <div class="card-body">
+                                <ul>
+                                    <li>Small changes in spending habits can lead to big savings.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Financial Summary</div>
+                    <div class="card-body">
+                        <p>Total Income: {{ total_income }}</p>
+                        <p>Total Expenditure: {{ total_expenditure }}</p>
+                        <p>Total Savings: {{ total_savings }}</p>
+                        <a href="{{ url_for('views.transactions') }}" class="btn btn-primary">View Transactions</a>
+                    </div>
+                </div>
+
+                <a class="carousel-control-prev" href="#financialSummary" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#financialSummary" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
