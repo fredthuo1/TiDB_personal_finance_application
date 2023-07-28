@@ -2,5 +2,4 @@ flask
 flask-login
 flask-wtf
 requests
-dotenv
 sqlalchemy
