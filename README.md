@@ -67,5 +67,3 @@ The development team behind Personal Finance Application is committed to continu
 Personal Finance Application aims to revolutionize personal finance management, empowering individuals to take control of their financial well-being. By offering powerful tools, educational resources, and actionable insights, our app strives to make financial planning accessible, efficient, and enjoyable for users worldwide.
 
 Join us on this exciting journey towards financial freedom and a secure future with Personal Finance Application!
-
-[Note: This white paper is a general outline and can be customized based on the specific features and goals of the application.]
