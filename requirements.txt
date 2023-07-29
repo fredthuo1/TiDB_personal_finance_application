@@ -1,6 +1,5 @@
 flask
 flask-login
-flask-wtf
 requests
 gunicorn==20.1.0
 attrs==21.2.0
