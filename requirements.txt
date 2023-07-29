@@ -3,4 +3,4 @@ flask-login
 flask-wtf
 requests
 sqlalchemy
-gunicorn
+gunicorn==20.1.0
